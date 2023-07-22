@@ -6,15 +6,18 @@
 Summary:	Library to control zoned block devices
 Summary(pl.UTF-8):	Biblioteka do kontroli strefowych urządzeń blokowych
 Name:		libzbd
-Version:	2.0.2
+Version:	2.0.4
 Release:	1
 License:	LGPL v3+ (library), GPL v3+ (tools)
 Group:		Libraries
 #Source0Download: https://github.com/westerndigitalcorporation/libzbd/releases
-Source0:	https://github.com/westerndigitalcorporation/libzbd/releases/download/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e003141516df60733ddc196ec0a8c530
+Source0:	https://github.com/westerndigitalcorporation/libzbd/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	ef3b227c3ceef438a10d07b6d879e378
 URL:		https://github.com/westerndigitalcorporation/libzbd
+BuildRequires:	autoconf >= 2.50
+BuildRequires:	automake >= 1:1.11
 %{?with_gui:BuildRequires:	gtk+3-devel >= 3.0}
+BuildRequires:	libtool >= 2:2
 BuildRequires:	linux-libc-headers >= 7:4.10
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -71,6 +74,11 @@ Graficzne narzędzia do zarządzania strefowymi urządzeniami blokowymi.
 %setup -q
 
 %build
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	%{!?with_gui:--disable-gui} \
 	--disable-silent-rules \
